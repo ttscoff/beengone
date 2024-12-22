@@ -250,7 +250,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 11.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.brettterpstra.beengone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SYMROOT = /Users/ttscoff/Desktop/Code/beengone/build;
+				SYMROOT = build;
 			};
 			name = Debug;
 		};
@@ -263,7 +263,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 11.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.brettterpstra.beengone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SYMROOT = /Users/ttscoff/Desktop/Code/beengone/build;
+				SYMROOT = build;
 			};
 			name = Release;
 		};
