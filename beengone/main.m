@@ -1,5 +1,8 @@
 /*******************************************************************************
- * Copyright (c) 2011, Jean-David Gadina <macmade@eosgarden.com>
+ * Copyright (c) 2024, Brett Terpstra
+ * MIT License
+ *
+ * Based on code by Jean-David Gadina <macmade@eosgarden.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
