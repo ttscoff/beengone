@@ -247,7 +247,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 47TRS7H4BH;
 				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brettterpstra.beengone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYMROOT = /Users/ttscoff/Desktop/Code/beengone/build;
 			};
 			name = Debug;
 		};
@@ -257,7 +260,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 47TRS7H4BH;
 				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brettterpstra.beengone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYMROOT = /Users/ttscoff/Desktop/Code/beengone/build;
 			};
 			name = Release;
 		};
