@@ -217,12 +217,12 @@ int main( int argc, char * argv[] )
 {
     @autoreleasepool {
         int newline = 0;
-        int limit = 0;
+        int limit = -1;
         struct argparse_option options[] = {
             OPT_HELP(),
             OPT_GROUP("Basic options"),
             OPT_BOOLEAN('n', "no-newline", &newline, "print without newline", NULL, 0, 0),
-            OPT_INTEGER('m', "minimum", &limit, "text for minimum idle time", NULL, 0, 0),
+            OPT_INTEGER('m', "minimum", &limit, "test for minimum idle time, exit 0 or 1 based on condition", NULL, 0, 0),
             OPT_END(),
         };
 
@@ -231,8 +231,8 @@ int main( int argc, char * argv[] )
         argparse_describe(&argparse, "\nPrint the system idle time in seconds", "");
         argc = argparse_parse(&argparse, argc, argv);
         
-        if (limit != 0) {
-            if ((unsigned long)[[[IdleTime alloc] init] secondsIdle] > limit)
+        if (limit > -1) {
+            if ((unsigned long)[[[IdleTime alloc] init] secondsIdle] >= limit)
                 return EXIT_SUCCESS;
             else
                 return EXIT_FAILURE;

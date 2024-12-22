@@ -1,0 +1,26 @@
+{
+  "configurations" : [
+    {
+      "id" : "68F0E556-F9B7-4174-8D3B-D3C912CE8788",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "commandLineArgumentEntries" : [
+
+    ],
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:beengone.xcodeproj",
+      "identifier" : "9358D3782D184013002FCB58",
+      "name" : "beengone"
+    }
+  },
+  "testTargets" : [
+
+  ],
+  "version" : 1
+}
