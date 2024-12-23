@@ -1,16 +1,10 @@
-## beengone 2.0.4
+## beengone 2.0.5
 
 #### IMPROVED
 
 - Allow limit of 0
 - Fix help output (missing t)
-
-## beengone 2.0.3
-
-#### IMPROVED
-
-- Allow limit of 0
-- Fix help output (missing t)
+- Fix automation
 
 ## beengone 2.0.0
 

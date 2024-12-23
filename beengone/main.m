@@ -41,7 +41,7 @@
 
 #include "argparse.h"
 
-#define BEENGONE_VERSION "2.0.4"
+#define BEENGONE_VERSION "2.0.5"
 
 /******************************************************************************/
 
