@@ -1,3 +1,13 @@
+## beengone 2.0.7
+
+#### NEW
+
+- Add version flag to executable
+
+#### IMPROVED
+
+- Automation updates
+
 ## beengone 2.0.6
 
 #### NEW
