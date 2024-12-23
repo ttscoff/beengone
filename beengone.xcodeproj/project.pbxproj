@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXCopyFilesBuildPhase section */
+		9306F6902D196EEB0012AE71 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		9358D3772D184013002FCB58 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -19,6 +28,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9306F6922D196EEB0012AE71 /* beengone x86 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "beengone x86"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9358D3792D184013002FCB58 /* beengone */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = beengone; sourceTree = BUILT_PRODUCTS_DIR; };
 		93AB3B9E2D185A3A00E3D4F6 /* beengone.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = beengone.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -32,6 +42,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		9306F68F2D196EEB0012AE71 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9358D3762D184013002FCB58 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -55,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				9358D3792D184013002FCB58 /* beengone */,
+				9306F6922D196EEB0012AE71 /* beengone x86 */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -62,6 +80,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		9306F6912D196EEB0012AE71 /* beengone x86 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9306F6962D196EEB0012AE71 /* Build configuration list for PBXNativeTarget "beengone x86" */;
+			buildPhases = (
+				9306F68E2D196EEB0012AE71 /* Sources */,
+				9306F68F2D196EEB0012AE71 /* Frameworks */,
+				9306F6902D196EEB0012AE71 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "beengone x86";
+			packageProductDependencies = (
+			);
+			productName = "beengone x86";
+			productReference = 9306F6922D196EEB0012AE71 /* beengone x86 */;
+			productType = "com.apple.product-type.tool";
+		};
 		9358D3782D184013002FCB58 /* beengone */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9358D3802D184013002FCB58 /* Build configuration list for PBXNativeTarget "beengone" */;
@@ -91,8 +128,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					9306F6912D196EEB0012AE71 = {
+						CreatedOnToolsVersion = 16.2;
+					};
 					9358D3782D184013002FCB58 = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -113,11 +154,19 @@
 			projectRoot = "";
 			targets = (
 				9358D3782D184013002FCB58 /* beengone */,
+				9306F6912D196EEB0012AE71 /* beengone x86 */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		9306F68E2D196EEB0012AE71 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9358D3752D184013002FCB58 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -128,6 +177,31 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		9306F6972D196EEB0012AE71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 47TRS7H4BH;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		9306F6982D196EEB0012AE71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 47TRS7H4BH;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		9358D37E2D184013002FCB58 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -250,6 +324,7 @@
 				DEVELOPMENT_TEAM = 47TRS7H4BH;
 				ENABLE_HARDENED_RUNTIME = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.brettterpstra.beengone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SYMROOT = build;
@@ -272,6 +347,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		9306F6962D196EEB0012AE71 /* Build configuration list for PBXNativeTarget "beengone x86" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9306F6972D196EEB0012AE71 /* Debug */,
+				9306F6982D196EEB0012AE71 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		9358D3742D184013002FCB58 /* Build configuration list for PBXProject "beengone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

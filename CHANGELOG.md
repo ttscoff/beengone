@@ -1,0 +1,21 @@
+## beengone 2.0.4
+
+#### IMPROVED
+
+- Allow limit of 0
+- Fix help output (missing t)
+
+## beengone 2.0.3
+
+#### IMPROVED
+
+- Allow limit of 0
+- Fix help output (missing t)
+
+## beengone 2.0.0
+
+### NEW
+
+- Initial release of beengone v2, updated for use on Apple Silicon
+- Set up deploy scripts
+- Add `--minimum` option for scripting use

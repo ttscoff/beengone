@@ -41,18 +41,20 @@
 
 #include "argparse.h"
 
+#define BEENGONE_VERSION "2.0.4"
+
 /******************************************************************************/
 
 @interface IdleTime: NSObject
 {
 @protected
-    
+
     mach_port_t   _ioPort;
     io_iterator_t _ioIterator;
     io_object_t   _ioObject;
-    
+
 @private
-    
+
     id r1;
     id r2;
 }
@@ -69,18 +71,18 @@
 - ( id )init
 {
     kern_return_t status = 0;
-    
+
     if( ( self = [ super init ] ) )
     {
         _ioPort = kIOMainPortDefault;
-        
+
         status = IOServiceGetMatchingServices
         (
             _ioPort,
             IOServiceMatching( "IOHIDSystem" ),
             &_ioIterator
         );
-        
+
         if( status != KERN_SUCCESS )
         {
             @throw [ NSException
@@ -89,24 +91,24 @@
                         userInfo:           nil
                    ];
         }
-        
+
         _ioObject = IOIteratorNext( _ioIterator );
-        
+
         if( _ioObject == 0 )
         {
             IOObjectRelease( _ioIterator );
-            
+
             @throw [ NSException
                         exceptionWithName:  @"IdleTimeIteratorError"
                         reason:             @"Invalid iterator"
                         userInfo:           nil
                    ];
         }
-        
+
         IOObjectRetain( _ioObject );
         IOObjectRetain( _ioIterator );
     }
-    
+
     return self;
 }
 
@@ -123,7 +125,7 @@
     CFTypeID               type;
     uint64_t               time;
     CFMutableDictionaryRef properties;
-    
+
     properties = NULL;
     status     = IORegistryEntryCreateCFProperties
     (
@@ -132,7 +134,7 @@
         kCFAllocatorDefault,
         0
     );
-    
+
     if( status != KERN_SUCCESS || properties == NULL )
     {
         @throw [ NSException
@@ -141,24 +143,24 @@
                     userInfo:           nil
                ];
     }
-    
+
     idle = CFDictionaryGetValue( properties, CFSTR( "HIDIdleTime" ) );
-    
+
     if( !idle )
     {
         CFRelease( ( CFTypeRef )properties );
-        
+
         @throw [ NSException
                     exceptionWithName:  @"IdleTimeSystemTimeError"
                     reason:             @"Cannot get system idle time"
                     userInfo:           nil
                ];
     }
-    
+
     CFRetain( idle );
-    
+
     type = CFGetTypeID( idle );
-    
+
     if( type == CFDataGetTypeID() )
     {
         CFDataGetBytes
@@ -167,7 +169,7 @@
             CFRangeMake( 0, sizeof( time ) ),
             ( UInt8 * )&time
         );
-        
+
     }
     else if( type == CFNumberGetTypeID() )
     {
@@ -182,26 +184,26 @@
     {
         CFRelease( idle );
         CFRelease( ( CFTypeRef )properties );
-        
+
         @throw [ NSException
                     exceptionWithName:  @"IdleTimeTypeError"
                     reason:             [ NSString stringWithFormat: @"Unsupported type: %d\n", ( int )type ]
                     userInfo:           nil
                ];
     }
-    
+
     CFRelease( idle );
     CFRelease( ( CFTypeRef )properties );
-    
+
     return time;
 }
 
 - ( NSUInteger )secondsIdle
 {
     uint64_t time;
-    
+
     time = self.timeIdle;
-    
+
     return ( NSUInteger )( time >> 30 );
 }
 
@@ -218,11 +220,18 @@ int main( int argc, char * argv[] )
     @autoreleasepool {
         int newline = 0;
         int limit = -1;
+        
+        int beengone_version_cb(struct argparse *self, const struct argparse_option *option) {
+            printf("beengone version %s\n", BEENGONE_VERSION);
+            exit(0);
+        }
+        
         struct argparse_option options[] = {
             OPT_HELP(),
             OPT_GROUP("Basic options"),
-            OPT_BOOLEAN('n', "no-newline", &newline, "print without newline", NULL, 0, 0),
-            OPT_INTEGER('m', "minimum", &limit, "test for minimum idle time, exit 0 or 1 based on condition", NULL, 0, 0),
+            OPT_BOOLEAN('n', "no-newline", &newline, "print without newline", NULL, 0, OPT_NONEG),
+            OPT_INTEGER('m', "minimum", &limit, "test for minimum idle time in seconds, exit 0 or 1 based on condition", NULL, 0, 0),
+            OPT_BOOLEAN('v', "version", NULL, "show version and exit", beengone_version_cb, 0, OPT_NONEG),
             OPT_END(),
         };
 
@@ -230,21 +239,21 @@ int main( int argc, char * argv[] )
         argparse_init(&argparse, options, usages, 0);
         argparse_describe(&argparse, "\nPrint the system idle time in seconds", "");
         argc = argparse_parse(&argparse, argc, argv);
-        
+
         if (limit > -1) {
             if ((unsigned long)[[[IdleTime alloc] init] secondsIdle] >= limit)
                 return EXIT_SUCCESS;
             else
                 return EXIT_FAILURE;
         }
-            
+
         if (newline != 0)
             printf("%lu", (unsigned long)[[[IdleTime alloc] init] secondsIdle]);
         else
             printf("%lu\n", (unsigned long)[[[IdleTime alloc] init] secondsIdle]);
-        
+
     }
-    
+
     return EXIT_SUCCESS;
 }
-                
+
