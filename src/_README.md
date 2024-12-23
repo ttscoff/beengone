@@ -4,7 +4,7 @@
 ![beengone banner image](https://cdn3.brettterpstra.com/uploads/2024/12/beengone-header-rb.webp)<!--END GITHUB-->
 <!--JEKYLL{% img aligncenter 800 220 /uploads/2024/12/beengone-header-rb.jpg "beengone banner image" %}-->
 
-Current version: <!--VER-->2.0.5<!--END VER-->
+Current version: <!--VER-->2.0.7<!--END VER-->
 
 beengone is a CLI tool that tests how long a Mac has gone
 without user input (keyboard or mouse/trackpad). It detects
