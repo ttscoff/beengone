@@ -74,7 +74,7 @@ notarizefile() { # $1: path to file to notarize, $2: identifier
 
 }
 
-xcodebuild -scheme beengone -target beengone -arch x86 -arch arm65 build
+xcodebuild -scheme beengone -target beengone -arch x86_64 -arch arm64 build
 bindir="$builddir/build/Debug"
 codesign --force --verbose --sign "$identifier" -o runtime --timestamp build/Debug/beengone
 codesign --verify -vvvv $bindir/$executable
