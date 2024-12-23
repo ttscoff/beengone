@@ -215,16 +215,16 @@ static const char *const usages[] = {
     NULL,
 };
 
+int beengone_version_cb(struct argparse *self, const struct argparse_option *option) {
+    printf("beengone version %s\n", BEENGONE_VERSION);
+    exit(0);
+}
+
 int main( int argc, char * argv[] )
 {
     @autoreleasepool {
         int newline = 0;
         int limit = -1;
-        
-        int beengone_version_cb(struct argparse *self, const struct argparse_option *option) {
-            printf("beengone version %s\n", BEENGONE_VERSION);
-            exit(0);
-        }
         
         struct argparse_option options[] = {
             OPT_HELP(),
