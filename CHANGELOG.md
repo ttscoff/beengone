@@ -1,3 +1,9 @@
+## beengone 2.0.6
+
+#### NEW
+
+- Add version flag to executable
+
 ## beengone 2.0.5
 
 #### IMPROVED
