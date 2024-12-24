@@ -2,15 +2,24 @@
 
 <!--README--><!--GITHUB-->
 ![beengone banner image](https://cdn3.brettterpstra.com/uploads/2024/12/beengone-header-rb.webp)<!--END GITHUB-->
-<!--JEKYLL{% img aligncenter 800 220 /uploads/2024/12/beengone-header-rb.jpg "beengone banner image" %}-->
 
-Current version: <!--VER-->2.0.7<!--END VER-->
+[original]: https://xs-labs.com/en/archives/articles/iokit-idle-time/
+[v1]: https://brettterpstra.com/2013/02/10/beengone-a-script-friendly-way-to-check-computer-idle-time/
+
+This is a revival of an [old project][v1] of mine, rewritten
+for v2.0 with some updates for recent versions of macOS and
+with the addition of some command line flags that make
+scripting easier. This code is based on
+[a post by Jean-David Gadina][original], on which I've
+elaborated.
 
 beengone is a (macOS-only) CLI tool that tests how long a
 Mac has gone without user input (keyboard or
 mouse/trackpad). It detects any movement or keypress,
 including modifier keys. Run without arguments, it outputs
 the number of seconds the machine has been idle.
+
+Current version: <!--VER-->2.0.8<!--END VER-->
 
 You can print the seconds idle with no newline using `-n`,
 simulate input with `-i`, resetting the idle timer.
@@ -67,8 +76,5 @@ And here's an example for Fish
 ([link](https://gist.github.com/ttscoff/8079c8776e8f5e1f32610ba5c4992a6c))
 using the `-w` command to block execution until the minimum
 idle time is reached.
-
-<!--JEKYLL{% gist 8079c8776e8f5e1f32610ba5c4992a6c %}-->
-
 <!--END README-->
 
