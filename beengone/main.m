@@ -215,6 +215,51 @@ static const char *const usages[] = {
     NULL,
 };
 
+unsigned long parse_time_string(const char *time_str) {
+    unsigned long total_seconds = 0;
+    unsigned long value = 0;
+    char unit = '\0';
+
+    while (*time_str) {
+        if (sscanf(time_str, "%lu%c", &value, &unit) == 2) {
+            switch (unit) {
+                case 'd':
+                    total_seconds += value * 86400; // 1 day = 86400 seconds
+                    break;
+                case 'h':
+                    total_seconds += value * 3600; // 1 hour = 3600 seconds
+                    break;
+                case 'm':
+                    total_seconds += value * 60; // 1 minute = 60 seconds
+                    break;
+                case 's':
+                    total_seconds += value;
+                    break;
+                default:
+                    break;
+            }
+
+            // Advance the pointer past the current value and unit
+            while (*time_str && *time_str != ' ' && *time_str != '\t') {
+                time_str++;
+            }
+        } else if (sscanf(time_str, "%lu", &value) == 1) {
+            total_seconds += value;
+            break;
+        } else {
+            break;
+        }
+
+        // Skip any spaces or tabs
+        while (*time_str && (*time_str == ' ' || *time_str == '\t')) {
+            time_str++;
+        }
+    }
+
+    return total_seconds;
+}
+
+
 int beengone_version_cb(struct argparse *self, const struct argparse_option *option) {
     printf("beengone version %s\n", BEENGONE_VERSION);
     exit(0);
@@ -224,13 +269,14 @@ int main( int argc, char * argv[] )
 {
     @autoreleasepool {
         int newline = 0;
-        int limit = -1;
-        
+        unsigned long limit = -1;
+        const char *minimum = NULL;
+
         struct argparse_option options[] = {
             OPT_HELP(),
             OPT_GROUP("Basic options"),
             OPT_BOOLEAN('n', "no-newline", &newline, "print without newline", NULL, 0, OPT_NONEG),
-            OPT_INTEGER('m', "minimum", &limit, "test for minimum idle time in seconds, exit 0 or 1 based on condition", NULL, 0, 0),
+            OPT_STRING('m', "minimum", &minimum, "test for minimum idle time in seconds, exit 0 or 1 based on condition. Accepts strings like 5h 30m or 1d12h", NULL, 0, OPT_NONEG),
             OPT_BOOLEAN('v', "version", NULL, "show version and exit", beengone_version_cb, 0, OPT_NONEG),
             OPT_END(),
         };
@@ -240,7 +286,11 @@ int main( int argc, char * argv[] )
         argparse_describe(&argparse, "\nPrint the system idle time in seconds", "");
         argc = argparse_parse(&argparse, argc, argv);
 
-        if (limit > -1) {
+        if (minimum != NULL) {
+            limit = parse_time_string(minimum);
+        }
+
+        if (limit >= 0) {
             if ((unsigned long)[[[IdleTime alloc] init] secondsIdle] >= limit)
                 return EXIT_SUCCESS;
             else

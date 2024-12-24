@@ -1,7 +1,7 @@
-desc 'Development version check'
+desc "Development version check"
 task :ver do
   gver = `git ver`
-  cver = IO.read('CHANGELOG.md').match(/^#+ (?:.*?) (\d+\.\d+\.\d+(\w+)?)/m)[1]
+  cver = IO.read("CHANGELOG.md").match(/^#+ (?:.*?) (\d+\.\d+\.\d+(\w+)?)/m)[1]
   res = `grep BEENGONE_VERSION beengone/main.m`
   version = res.match(/(?mi)(?<=#define BEENGONE_VERSION ")(\d+\.\d+\.\d+(\..+)?)(?=")/)[1]
 
@@ -10,13 +10,13 @@ task :ver do
   puts "changelog: #{cver}"
 end
 
-desc 'Changelog version check'
+desc "Changelog version check"
 task :cver do
-  puts IO.read(File.join(File.dirname(__FILE__), 'CHANGELOG.md')).match(/^#+ (?:.*?) (\d+\.\d+\.\d+(\w+)?)/)[1]
+  puts IO.read(File.join(File.dirname(__FILE__), "CHANGELOG.md")).match(/^#+ (?:.*?) (\d+\.\d+\.\d+(\w+)?)/)[1]
 end
 
 # merge
-def semantic(major, minor, inc, pre, type = 'inc')
+def semantic(major, minor, inc, pre, type = "inc")
   case type
   when /^maj/
     major += 1
@@ -32,13 +32,14 @@ def semantic(major, minor, inc, pre, type = 'inc')
   end
   [major, minor, inc, pre]
 end
+
 # /merge
 
 # merge
-desc 'Bump incremental version number'
+desc "Bump incremental version number"
 task :bump, :type do |_, args|
-  args.with_defaults(type: 'inc')
-  version_file = 'beengone/main.m'
+  args.with_defaults(type: "inc")
+  version_file = "beengone/main.m"
   content = IO.read(version_file)
   content.sub!(/(?mi)(?<=#define BEENGONE_VERSION ")(?<major>\d+)\.(?<minor>\d+)\.(?<inc>\d+)(?<pre>\S+)?(?=")/) do
     m = Regexp.last_match
@@ -48,6 +49,6 @@ task :bump, :type do |_, args|
     $stdout.puts "At version #{major}.#{minor}.#{inc}#{pre}"
     %(#{major}.#{minor}.#{inc}#{pre})
   end
-  File.open(version_file, 'w+') { |f| f.puts content }
+  File.open(version_file, "w+") { |f| f.puts content }
 end
 # /merge

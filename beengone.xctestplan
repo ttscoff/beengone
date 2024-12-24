@@ -20,7 +20,13 @@
     }
   },
   "testTargets" : [
-
+    {
+      "target" : {
+        "containerPath" : "container:beengone.xcodeproj",
+        "identifier" : "93D75F2F2D19EBF2005FCE74",
+        "name" : "beengoneTests"
+      }
+    }
   ],
   "version" : 1
 }

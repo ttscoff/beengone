@@ -1,0 +1,76 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "script",
+			"scriptType": "bash",
+			"path": "scripts/",
+			"fileName": "build.sh",
+			"scriptFile": true,
+			"script": "sh",
+			"target": "sh",
+			"uri": {
+				"$mid": 1,
+				"fsPath": "/Users/ttscoff/Desktop/Code/beengone/scripts/build.sh",
+				"external": "file:///Users/ttscoff/Desktop/Code/beengone/scripts/build.sh",
+				"path": "/Users/ttscoff/Desktop/Code/beengone/scripts/build.sh",
+				"scheme": "file"
+			},
+			"takesArgs": false,
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"label": "bash: build.sh",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"type": "script",
+			"scriptType": "bash",
+			"path": "scripts/",
+			"fileName": "quicktest.sh",
+			"scriptFile": true,
+			"script": "sh",
+			"target": "sh",
+			"uri": {
+				"$mid": 1,
+				"fsPath": "/Users/ttscoff/Desktop/Code/beengone/scripts/quicktest.sh",
+				"external": "file:///Users/ttscoff/Desktop/Code/beengone/scripts/quicktest.sh",
+				"path": "/Users/ttscoff/Desktop/Code/beengone/scripts/quicktest.sh",
+				"scheme": "file"
+			},
+			"takesArgs": false,
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"label": "bash: quicktest.sh",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			}
+		},
+		{
+			"type": "script",
+			"scriptType": "bash",
+			"path": "scripts/",
+			"fileName": "package.sh",
+			"scriptFile": true,
+			"script": "sh",
+			"target": "sh",
+			"uri": {
+				"$mid": 1,
+				"fsPath": "/Users/ttscoff/Desktop/Code/beengone/scripts/package.sh",
+				"external": "file:///Users/ttscoff/Desktop/Code/beengone/scripts/package.sh",
+				"path": "/Users/ttscoff/Desktop/Code/beengone/scripts/package.sh",
+				"scheme": "file"
+			},
+			"takesArgs": false,
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"label": "bash: package.sh"
+		}
+	]
+}
