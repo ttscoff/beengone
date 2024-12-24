@@ -243,6 +243,7 @@ int beengone_version_cb(struct argparse *self,
 int main(int argc, char *argv[]) {
   @autoreleasepool {
     int newline = 0;
+    int debug = 0;
     unsigned long limit = 0;
     const char *minimum = NULL;
 
@@ -253,13 +254,15 @@ int main(int argc, char *argv[]) {
                     0, OPT_NONEG),
         OPT_STRING('m', "minimum", &minimum,
                    "test for minimum idle time in seconds, exit 0 or 1 based "
-                   "on condition. Accepts strings like 5h 30m or 1d12h",
+                   "on condition, accepts strings like \"5h 30m\" or \"1d12h\"",
                    NULL, 0, OPT_NONEG),
 
         OPT_BOOLEAN('i', "input", NULL, "simulate user input",
                     simulate_user_input, 0, OPT_NONEG),
         OPT_GROUP("Other"),
         OPT_HELP(),
+        OPT_BOOLEAN('d', "debug", &debug, "print debugging info", NULL, 0,
+                    OPT_NONEG),
         OPT_BOOLEAN('v', "version", NULL, "show version and exit",
                     beengone_version_cb, 0, OPT_NONEG),
         OPT_END(),
@@ -278,13 +281,18 @@ int main(int argc, char *argv[]) {
     unsigned long idle = (unsigned long)[[[IdleTime alloc] init] secondsIdle];
 
     if (limit > 0) {
-      fprintf(stderr, "Limit: %lu seconds, idle time %lu: ", limit, idle);
+      if (debug != 0)
+        fprintf(stderr, "Limit: %lu seconds, idle time %lu: ", limit, idle);
 
       if (idle >= limit) {
-        fprintf(stderr, "%s", "true\n");
+        if (debug != 0)
+          fprintf(stderr, "%s", "true\n");
+
         return EXIT_SUCCESS;
       } else {
-        fprintf(stderr, "%s", "false\n");
+        if (debug != 0)
+          fprintf(stderr, "%s", "false\n");
+
         return EXIT_FAILURE;
       }
     }
