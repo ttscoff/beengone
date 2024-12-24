@@ -143,7 +143,6 @@
   if (type == CFDataGetTypeID()) {
     CFDataGetBytes((CFDataRef)idle, CFRangeMake(0, sizeof(time)),
                    (UInt8 *)&time);
-
   } else if (type == CFNumberGetTypeID()) {
     CFNumberGetValue((CFNumberRef)idle, kCFNumberSInt64Type, &time);
   } else {
@@ -190,23 +189,26 @@ unsigned long parse_time_string(const char *time_str) {
       case 'd':
         total_seconds += value * 86400; // 1 day = 86400 seconds
         break;
+
       case 'h':
         total_seconds += value * 3600; // 1 hour = 3600 seconds
         break;
+
       case 'm':
         total_seconds += value * 60; // 1 minute = 60 seconds
         break;
+
       case 's':
         total_seconds += value;
         break;
+
       default:
         break;
       }
 
       // Advance the pointer past the current value and unit
-      while (*time_str && *time_str != ' ' && *time_str != '\t') {
+      while (*time_str && *time_str != ' ' && *time_str != '\t')
         time_str++;
-      }
     } else if (sscanf(time_str, "%lu", &value) == 1) {
       total_seconds += value;
       break;
@@ -215,12 +217,21 @@ unsigned long parse_time_string(const char *time_str) {
     }
 
     // Skip any spaces or tabs
-    while (*time_str && (*time_str == ' ' || *time_str == '\t')) {
+    while (*time_str && (*time_str == ' ' || *time_str == '\t'))
       time_str++;
-    }
   }
 
   return total_seconds;
+}
+
+int simulate_user_input(struct argparse *self,
+                        const struct argparse_option *option) {
+  CGEventRef event = CGEventCreate(NULL);
+  if (event) {
+    CGEventPost(kCGHIDEventTap, event);
+    CFRelease(event);
+  }
+  exit(0);
 }
 
 int beengone_version_cb(struct argparse *self,
@@ -236,14 +247,19 @@ int main(int argc, char *argv[]) {
     const char *minimum = NULL;
 
     struct argparse_option options[] = {
-        OPT_HELP(),
-        OPT_GROUP("Basic options"),
+
+        OPT_GROUP("Options"),
         OPT_BOOLEAN('n', "no-newline", &newline, "print without newline", NULL,
                     0, OPT_NONEG),
         OPT_STRING('m', "minimum", &minimum,
                    "test for minimum idle time in seconds, exit 0 or 1 based "
                    "on condition. Accepts strings like 5h 30m or 1d12h",
                    NULL, 0, OPT_NONEG),
+
+        OPT_BOOLEAN('i', "input", NULL, "simulate user input",
+                    simulate_user_input, 0, OPT_NONEG),
+        OPT_GROUP("Other"),
+        OPT_HELP(),
         OPT_BOOLEAN('v', "version", NULL, "show version and exit",
                     beengone_version_cb, 0, OPT_NONEG),
         OPT_END(),
@@ -251,7 +267,8 @@ int main(int argc, char *argv[]) {
 
     struct argparse argparse;
     argparse_init(&argparse, options, usages, 0);
-    argparse_describe(&argparse, "\nPrint the system idle time in seconds", "");
+    argparse_describe(&argparse, "\nPrint the system idle time in seconds.",
+                      "");
     argc = argparse_parse(&argparse, argc, argv);
 
     if (minimum != NULL) {
@@ -262,6 +279,7 @@ int main(int argc, char *argv[]) {
 
     if (limit > 0) {
       fprintf(stderr, "Limit: %lu seconds, idle time %lu: ", limit, idle);
+
       if (idle >= limit) {
         fprintf(stderr, "%s", "true\n");
         return EXIT_SUCCESS;
@@ -271,10 +289,11 @@ int main(int argc, char *argv[]) {
       }
     }
 
-    if (newline != 0)
+    if (newline != 0) {
       printf("%lu", idle);
-    else
+    } else {
       printf("%lu\n", idle);
+    }
   }
 
   return EXIT_SUCCESS;
