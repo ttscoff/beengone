@@ -41,7 +41,7 @@
 
 #include "argparse.h"
 
-#define BEENGONE_VERSION "2.0.7"
+#define BEENGONE_VERSION "2.0.8"
 
 /******************************************************************************/
 
@@ -226,12 +226,32 @@ unsigned long parse_time_string(const char *time_str) {
 
 int simulate_user_input(struct argparse *self,
                         const struct argparse_option *option) {
-  CGEventRef event = CGEventCreate(NULL);
-  if (event) {
-    CGEventPost(kCGHIDEventTap, event);
-    CFRelease(event);
+  CGEventRef click_down = CGEventCreateMouseEvent(
+      NULL, kCGEventLeftMouseDown, CGPointMake(100, 100), kCGMouseButtonLeft);
+  CGEventRef click_up = CGEventCreateMouseEvent(
+      NULL, kCGEventLeftMouseUp, CGPointMake(100, 100), kCGMouseButtonLeft);
+
+  if (click_down && click_up) {
+    CGEventPost(kCGHIDEventTap, click_down);
+    CGEventPost(kCGHIDEventTap, click_up);
+    CFRelease(click_down);
+    CFRelease(click_up);
   }
+
   exit(0);
+}
+
+void wait_for_idle_time(unsigned long target_idle_time) {
+  IdleTime *idleTime = [[IdleTime alloc] init];
+  unsigned long idle = 0;
+
+  while (1) {
+    idle = (unsigned long)[idleTime secondsIdle];
+    if (idle >= target_idle_time) {
+      break;
+    }
+    sleep(1); // Sleep for 1 second before checking again
+  }
 }
 
 int beengone_version_cb(struct argparse *self,
@@ -246,17 +266,22 @@ int main(int argc, char *argv[]) {
     int debug = 0;
     unsigned long limit = 0;
     const char *minimum = NULL;
+    const char *wait = NULL;
 
     struct argparse_option options[] = {
 
         OPT_GROUP("Options"),
-        OPT_BOOLEAN('n', "no-newline", &newline, "print without newline", NULL,
-                    0, OPT_NONEG),
+        OPT_BOOLEAN('n', "no-newline", &newline,
+                    "print idle seconds without newline", NULL, 0, OPT_NONEG),
         OPT_STRING('m', "minimum", &minimum,
                    "test for minimum idle time in seconds, exit 0 or 1 based "
                    "on condition, accepts strings like \"5h 30m\" or \"1d12h\"",
                    NULL, 0, OPT_NONEG),
-
+        OPT_STRING(
+            'w', "wait", &wait,
+            "wait until the system has been idle for the specified "
+            "number of seconds, accepts strings like \"5h 30m\" or \"1m30s\"",
+            NULL, 0, OPT_NONEG),
         OPT_BOOLEAN('i', "input", NULL, "simulate user input",
                     simulate_user_input, 0, OPT_NONEG),
         OPT_GROUP("Other"),
@@ -274,26 +299,33 @@ int main(int argc, char *argv[]) {
                       "");
     argc = argparse_parse(&argparse, argc, argv);
 
-    if (minimum != NULL) {
-      limit = parse_time_string(minimum);
+    if (wait != NULL) {
+      limit = parse_time_string(wait);
+
+      wait_for_idle_time(limit);
+      return EXIT_SUCCESS;
     }
 
     unsigned long idle = (unsigned long)[[[IdleTime alloc] init] secondsIdle];
 
-    if (limit > 0) {
-      if (debug != 0)
-        fprintf(stderr, "Limit: %lu seconds, idle time %lu: ", limit, idle);
+    if (minimum != NULL) {
+      limit = parse_time_string(minimum);
 
-      if (idle >= limit) {
+      if (limit > 0) {
         if (debug != 0)
-          fprintf(stderr, "%s", "true\n");
+          fprintf(stderr, "Limit: %lu seconds, idle time %lu: ", limit, idle);
 
-        return EXIT_SUCCESS;
-      } else {
-        if (debug != 0)
-          fprintf(stderr, "%s", "false\n");
+        if (idle >= limit) {
+          if (debug != 0)
+            fprintf(stderr, "%s", "true\n");
 
-        return EXIT_FAILURE;
+          return EXIT_SUCCESS;
+        } else {
+          if (debug != 0)
+            fprintf(stderr, "%s", "false\n");
+
+          return EXIT_FAILURE;
+        }
       }
     }
 

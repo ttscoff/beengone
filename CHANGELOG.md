@@ -1,3 +1,16 @@
+## beengone 2.0.8
+
+#### NEW
+
+- Add parsing of strings like '3h 30m' to --minimum
+- -i option to fake user input, thus resetting the idle timer
+
+#### IMPROVED
+
+- More tests
+- Add debugging feedback on STDERR for --minimum
+- Make STDERR output optional with `--debug` flag
+
 ## beengone 2.0.7
 
 #### IMPROVED
