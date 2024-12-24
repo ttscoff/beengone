@@ -74,7 +74,12 @@
 
     if( ( self = [ super init ] ) )
     {
-        _ioPort = kIOMainPortDefault;
+        if (@available(macOS 12.0, *)) {
+            _ioPort = kIOMainPortDefault;
+        } else {
+            printf('%s', "macOS 12.0 or higher required.");
+            exit(1);
+        }
 
         status = IOServiceGetMatchingServices
         (
@@ -289,18 +294,24 @@ int main( int argc, char * argv[] )
         if (minimum != NULL) {
             limit = parse_time_string(minimum);
         }
-
+        
+        unsigned long idle = (unsigned long)[[[IdleTime alloc] init] secondsIdle];
+        
         if (limit >= 0) {
-            if ((unsigned long)[[[IdleTime alloc] init] secondsIdle] >= limit)
+            fprintf(stderr, "Limit: %lu seconds, idle time %lu: ", limit, idle);
+            if (idle >= limit) {
+                fprintf(stderr, "%s", "true\n");
                 return EXIT_SUCCESS;
-            else
+            } else {
+                fprintf(stderr, "%s", "false\n");
                 return EXIT_FAILURE;
+            }
         }
 
         if (newline != 0)
-            printf("%lu", (unsigned long)[[[IdleTime alloc] init] secondsIdle]);
+            printf("%lu", idle);
         else
-            printf("%lu\n", (unsigned long)[[[IdleTime alloc] init] secondsIdle]);
+            printf("%lu\n", idle);
 
     }
 

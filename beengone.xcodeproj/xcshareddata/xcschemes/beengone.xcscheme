@@ -62,12 +62,12 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-m 60"
-            isEnabled = "NO">
+            argument = "-m 3"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-m 3d12h30s"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>
