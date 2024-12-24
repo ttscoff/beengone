@@ -62,7 +62,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-m 3"
+            argument = "-m 3h"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
